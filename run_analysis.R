@@ -1,5 +1,4 @@
 library(dplyr)
-library(tidyr)
 # You should create one R script called run_analysis.R that does the following. 
 # -------------------------------------------------------------
 # Merges the training and the test sets to create one data set.
@@ -58,13 +57,15 @@ descriptive_activities <- mutate(extracted,
 tmp_colnames <- colnames(descriptive_activities)
 # expand shortened versions of various parts of labels,
 # downcase, and add underscores in lieu of camelcasing
-tmp_colnames <- sub("^f", "fft", tmp_colnames)
+tmp_colnames <- sub("^f", "frequency", tmp_colnames)
 tmp_colnames <- sub("^t", "time", tmp_colnames)
 tmp_colnames <- gsub("([A-Z])", " \\1", tmp_colnames)
 tmp_colnames <- sub("\\.std\\.", " standard_deviation", tmp_colnames)
 tmp_colnames <- gsub("[ \\.]+", "_", tmp_colnames)
 tmp_colnames <- sub("[ _]+$", "", tmp_colnames)
 tmp_colnames <- tolower(tmp_colnames)
+tmp_colnames <- sub("_acc_", "_accelerometer_", tmp_colnames)
+tmp_colnames <- sub("_gyro_", "_gyroscope_", tmp_colnames)
 colnames(descriptive_activities) <- tmp_colnames
 
 # ------------------------------------------------------------------------
